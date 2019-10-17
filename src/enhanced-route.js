@@ -9,6 +9,14 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -131,7 +139,7 @@ var SecureRoute = /** @class */ (function (_super) {
         });
     };
     SecureRoute.prototype.render = function () {
-        var successRoute = <react_router_dom_1.Route {...this.props}/>;
+        var successRoute = React.createElement(react_router_dom_1.Route, __assign({}, this.props));
         // If hasn't `routeGuard` props, then just render the real <Route>
         if (!this.state.hasRouteGuard) {
             if (this.props.enableDebug) {
@@ -140,8 +148,8 @@ var SecureRoute = /** @class */ (function (_super) {
             return successRoute;
         }
         var redirectPath = this.props.redirectToPathWhenFail ? this.props.redirectToPathWhenFail : '/';
-        var failRedirect = <react_router_dom_1.Redirect to={redirectPath}/>;
-        var failComponentRoute = this.props.componentWhenFail ? <react_router_dom_1.Route path={this.props.path} component={this.props.componentWhenFail}/> : null;
+        var failRedirect = React.createElement(react_router_dom_1.Redirect, { to: redirectPath });
+        var failComponentRoute = this.props.componentWhenFail ? React.createElement(react_router_dom_1.Route, { path: this.props.path, component: this.props.componentWhenFail }) : null;
         if (this.state.routeGuardFinished) {
             if (this.props.enableDebug) {
                 var debugMsg = "route guard passed, render <Route>.", className = this.constructor.name, debugTheme = SecureRouteLoggerConsoleTheme.testing;

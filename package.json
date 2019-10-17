@@ -1,20 +1,20 @@
 {
   "name": "react-route-guard",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Add powerful Route Guard functionality to `react-router-dom`",
   "main": "src/enhanced-route.js",
   "repository": "https://github.com/pixelfusion/react-route-guard.git",
   "author": "Wison <wison@pixelfusion.co.nz>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc src/enhanced-route.tsx",
+    "build": "./node_modules/.bin/tsc --jsx react src/enhanced-route.tsx",
     "build-declarationf-file": "rm -rf src/enhanced-route.d.ts && ./node_modules/.bin/tsc -d && mv src/enhanced-route.d.ts ./index.d.ts"
   },
   "devDependencies": {
     "@types/react": "^16.0.5",
     "@types/react-dom": "^15.5.4",
     "@types/react-router-dom": "^4.0.7",
-    "typescript": "^2.5.2"
+    "typescript": "2.5.2"
   },
   "dependencies": {
     "rxjs": "^5.4.3"
