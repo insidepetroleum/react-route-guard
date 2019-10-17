@@ -9,14 +9,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -52,16 +44,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var React = require("react");
 var react_router_dom_1 = require("react-router-dom");
 var rxjs_1 = require("rxjs");
+/**
+ * Debug logging theme
+ */
 var SecureRouteLoggerConsoleTheme = {
     normal: '',
     testing: 'color: darkcyan; font-size: 0.7rem; font-style: italic;',
     important: 'color: green; font-size: 0.7rem; font-style: normal; font-weight: bold',
     error: 'color: red; font-size: 0.7rem; font-style: normal; font-weight: bold'
 };
+/**
+ * Debug loggin
+ */
 var debugLogger = function (className, methodName, msg, displayFormat, extraData) {
     var messageToPrint = displayFormat ? "%c[" + className + " - " + methodName + "] " + msg : "[" + className + " - " + methodName + "] " + msg;
     if (displayFormat) {
@@ -81,7 +79,7 @@ var debugLogger = function (className, methodName, msg, displayFormat, extraData
         }
     }
 };
-var SecureRoute = (function (_super) {
+var SecureRoute = /** @class */ (function (_super) {
     __extends(SecureRoute, _super);
     function SecureRoute(props) {
         var _this = _super.call(this, props) || this;
@@ -98,7 +96,7 @@ var SecureRoute = (function (_super) {
             var tempRouteGuardResult;
             return __generator(this, function (_a) {
                 if (!this.state.hasRouteGuard) {
-                    return [2];
+                    return [2 /*return*/];
                 }
                 tempRouteGuardResult = this.props.routeGuard.shouldRoute();
                 if (typeof (tempRouteGuardResult) === 'boolean') {
@@ -128,12 +126,13 @@ var SecureRoute = (function (_super) {
                         }); });
                     });
                 }
-                return [2];
+                return [2 /*return*/];
             });
         });
     };
     SecureRoute.prototype.render = function () {
-        var successRoute = React.createElement(react_router_dom_1.Route, __assign({}, this.props));
+        var successRoute = <react_router_dom_1.Route {...this.props}/>;
+        // If hasn't `routeGuard` props, then just render the real <Route>
         if (!this.state.hasRouteGuard) {
             if (this.props.enableDebug) {
                 debugLogger(this.constructor.name, "render", "no route guard to run, render normal <Route> directly.", SecureRouteLoggerConsoleTheme.testing);
@@ -141,8 +140,8 @@ var SecureRoute = (function (_super) {
             return successRoute;
         }
         var redirectPath = this.props.redirectToPathWhenFail ? this.props.redirectToPathWhenFail : '/';
-        var failRedirect = React.createElement(react_router_dom_1.Redirect, { to: redirectPath });
-        var failComponentRoute = this.props.componentWhenFail ? React.createElement(react_router_dom_1.Route, { path: this.props.path, component: this.props.componentWhenFail }) : null;
+        var failRedirect = <react_router_dom_1.Redirect to={redirectPath}/>;
+        var failComponentRoute = this.props.componentWhenFail ? <react_router_dom_1.Route path={this.props.path} component={this.props.componentWhenFail}/> : null;
         if (this.state.routeGuardFinished) {
             if (this.props.enableDebug) {
                 var debugMsg = "route guard passed, render <Route>.", className = this.constructor.name, debugTheme = SecureRouteLoggerConsoleTheme.testing;
@@ -156,6 +155,7 @@ var SecureRoute = (function (_super) {
                 return successRoute;
             }
             else {
+                // `componentWhenFail` got higher priority than `redirectToPathWhenFail`
                 return this.props.componentWhenFail ? failComponentRoute : failRedirect;
             }
         }
