@@ -1,5 +1,5 @@
 {
-  "name": "react-route-guard",
+   "name": "react-route-guard",
   "version": "1.0.7",
   "description": "Add powerful Route Guard functionality to `react-router-dom`",
   "main": "index.js",
